@@ -5,6 +5,7 @@
 //  Created by 김도현 on 2023/07/24.
 //
 
+
 import Foundation
 
 let mainMenu = """
@@ -49,26 +50,66 @@ let drinksMenu = """
 6. Bottled Water| W 1.0 | 지리산 암반대수층으로 만든 프리미엄 생수
 0. 뒤로가기      | 뒤로가기
 """
+
+let beersMenu = """
+[ Beers MENU ]
+1. ShackMeister Ale  | W 9.8 | 쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주
+2. Magpie Brewing Co.| W 6.8 | Pale Ale / Draft
+0. 뒤로가기      | 뒤로가기
+"""
 */
 
-while true {
-    print(mainMenu)
-    let number = Int(readLine()!)!
+//let drinksMenu = ["1. Lemonade     | W 3.9 | 매장에서 직접 만드는 상큼한 레몬에이드", "2. Iced Tea     | W 3.4 | 직접 유기농 홍차를 우려낸 아이스티", "3. Fifty/Fifty  | W 3.5 | 레몬에이드와 아이스티의 만남", "4. Fountain Soda| W 2.7 | 코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", "5. Root Beer    | W 4.4 | 청량감 있는 독특한 미국식 무알콜 탄산음료", "6. Bottled Water| W 1.0 | 지리산 암반대수층으로 만든 프리미엄 생수", "0. 뒤로가기      | 뒤로가기"]
+//
+//for drinks in drinksMenu{
+//    print(drinks)
+//}
+
+class Drinks {
+    let drinks1 = ItemList(name: "Lemonade", price: "W 3.9", description: "매장에서 직접 만드는 상큼한 레몬에이드")
+    let drinks2 = ItemList(name: "Iced Tea", price: "W 3.4", description: "직접 유기농 홍차를 우려낸 아이스티")
     
-    if number == 0 {
-        print("프로그램을 종료합니다.")
-        break
-    } else if number == 1 {
-        print(burgersMenu)
-        let burgersNumber = Int(readLine()!)!
-        if burgersNumber == 0 {
-            continue
-        }
-        else {
-            print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
-        }
-    } else {
-        print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+}
+
+var drinksList: [Drinks] = []
+
+print(drinksList)
+
+//while true {
+//    print(mainMenu)
+//    let number = Int(readLine()!)!
+//
+//    if number == 0 {
+//        print("프로그램을 종료합니다.")
+//        break
+//    } else if number == 1 {
+//        print(burgersMenu)
+//        let burgersNumber = Int(readLine()!)!
+//        if burgersNumber == 0 {}
+//        else {
+//            print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+//        }
+//    } else if number == 3 {
+//    } else {
+//        print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+//    }
+//}
+
+
+class ItemList {
+    var name: String
+    var price: String
+    var description: String
+
+    init(name: String, price: String, description: String) {
+        self.name = name
+        self.price = price
+        self.description = description
+    }
+
+    func display() {
+        print("1. \(name) + | \(price) | + \(description)")
     }
 }
+
 
