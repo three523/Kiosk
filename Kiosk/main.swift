@@ -32,24 +32,29 @@ let burgersMenu = """
 """
 
 
-class Drinks {
+class ItemList {
     var name: String
-    var price: Int
-    var descripton: String
+    var price: Double
+    var description: String
     
-    init(name: String, price: Int, descripton: String) {
+    init(name: String, price: Double, description: String) {
         self.name = name
         self.price = price
-        self.descripton = descripton
+        self.description = description
     }
     
     func displayInfo(index: Int) {
-        print("\(index+1). \(name) | W\(price) | \(descripton)")
+        print("\(index+1). \(name) | W\(price) | \(description)")
     }
 }
 
-var drinks: [Drinks] = [
-    Drinks.displayInfo(name: Lemonade, price: 3.9, description: 매장에서 직접 만드는 상큼한 레몬에이드)
+let drinks: [ItemList] = [
+    ItemList(name: "Lemonade", price: 3.9, description: "매장에서 직접 만드는 상큼한 레몬에이드"),
+    ItemList(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티"),
+    ItemList(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남"),
+    ItemList(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프"),
+    ItemList(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료"),
+    ItemList(name: "Bottled Water", price: 1.0, description: "지리산 암반대수층으로 만든 프리미엄 생수")
 ]
 
 
