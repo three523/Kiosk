@@ -31,6 +31,28 @@ let burgersMenu = """
 0. 뒤로가기      | 뒤로가기
 """
 
+
+class Drinks {
+    var name: String
+    var price: Int
+    var descripton: String
+    
+    init(name: String, price: Int, descripton: String) {
+        self.name = name
+        self.price = price
+        self.descripton = descripton
+    }
+    
+    func displayInfo(index: Int) {
+        print("\(index+1). \(name) | W\(price) | \(descripton)")
+    }
+}
+
+var drinks: [Drinks] = [
+    Drinks.displayInfo(name: Lemonade, price: 3.9, description: 매장에서 직접 만드는 상큼한 레몬에이드)
+]
+
+
 /*
 let frozenMenu = """
 [ Frozen Custard MENU ]
@@ -65,15 +87,6 @@ let beersMenu = """
 //    print(drinks)
 //}
 
-class Drinks {
-    let drinks1 = ItemList(name: "Lemonade", price: "W 3.9", description: "매장에서 직접 만드는 상큼한 레몬에이드")
-    let drinks2 = ItemList(name: "Iced Tea", price: "W 3.4", description: "직접 유기농 홍차를 우려낸 아이스티")
-    
-}
-
-var drinksList: [Drinks] = []
-
-print(drinksList)
 
 //while true {
 //    print(mainMenu)
@@ -94,22 +107,3 @@ print(drinksList)
 //        print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
 //    }
 //}
-
-
-class ItemList {
-    var name: String
-    var price: String
-    var description: String
-
-    init(name: String, price: String, description: String) {
-        self.name = name
-        self.price = price
-        self.description = description
-    }
-
-    func display() {
-        print("1. \(name) + | \(price) | + \(description)")
-    }
-}
-
-
