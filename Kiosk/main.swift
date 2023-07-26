@@ -31,7 +31,6 @@ let burgersMenu = """
 0. 뒤로가기      | 뒤로가기
 """
 
-
 class ItemList {
     var name: String
     var price: Double
@@ -43,72 +42,83 @@ class ItemList {
         self.description = description
     }
     
-    func displayInfo(index: Int) {
-        print("\(index+1). \(name) | W\(price) | \(description)")
+    func displayInfo(number: Int) {
+        print("\(number+1). \(name) | W\(price) | \(description)")
     }
 }
 
-let drinks: [ItemList] = [
-    ItemList(name: "Lemonade", price: 3.9, description: "매장에서 직접 만드는 상큼한 레몬에이드"),
-    ItemList(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티"),
-    ItemList(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남"),
-    ItemList(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프"),
-    ItemList(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료"),
-    ItemList(name: "Bottled Water", price: 1.0, description: "지리산 암반대수층으로 만든 프리미엄 생수")
+class Drinks: ItemList {
+    //매장컵 이용할건지 Bool 타입으로 묻기
+    var forHere: Bool = true
+    
+    init(name: String, price: Double, description: String, forHere: Bool) {
+        super.init(name: name, price: price, description: description)
+    }
+}
+
+let drinksMenu: [Drinks] = [
+    Drinks(name: "Lemonade", price: 3.9, description: "매장에서 직접 만드는 상큼한 레몬에이드", forHere: true),
+    Drinks(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티", forHere: true),
+    Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", forHere: true),
+    Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", forHere: true),
+    Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", forHere: true),
+    Drinks(name: "Bottled Water", price: 1.0, description: "지리산 암반대수층으로 만든 프리미엄 생수", forHere: true)
 ]
 
+func drinks() {
+    while true{
+        print("주문할 메뉴의 번호를 입력해주세요.")
+        print()
+        for i in 0..<drinksMenu.count {
+            drinksMenu[i].displayInfo(number: i)
+        }
+        print("0. 뒤로가기 | 뒤로가기")
+        let drinknumber = Int(readLine()!)!
+        if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 || drinknumber == 6 {
+            print("\(drinknumber)번 메뉴를 주문하시겠습니까?")
+            while true {
+                print("매장컵을 이용하시겠습니까? y/n (일회용컵 이용 시 300원 추가)")
+                let cupInput = readLine()!
+                if cupInput == "y" {
+                    print("음료가 매장컵에 준비됩니다.")
+                    print(drinksMenu[drinknumber].forHere)
+                    break
+                } else if cupInput == "n" {
+                    drinksMenu[drinknumber].forHere = !drinksMenu[drinknumber].forHere
+                    print("음료가 일회용컵에 준비됩니다.")
+                    print(drinksMenu[drinknumber].forHere)
+                    // drinksMenu[drinknumber].forHere = true 인 경우 price += 300
+                    break
+                }
+                else {
+                    print("잘못 입력되었습니다.")
+                }
+            }
+        } else if drinknumber == 0 {
+            break
+        } else {
+            print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+        }
+    }
+}
 
-/*
-let frozenMenu = """
-[ Frozen Custard MENU ]
-1. Shakes     | W 5.9 | 바닐라 / 초콜릿 / 솔티드 카라멜 / 스트로베리 / 피넛버터 /커피
-2. Float      | W 5.9 | 루트 비어 / 퍼플 카우 / 크림시클
-3. Cups&Cones | W 4.9 | 바닐라 / 초콜렛
-0. 뒤로가기     | 뒤로가기
-"""
+while true {
+    print(mainMenu)
+    let number = Int(readLine()!)!
 
-let drinksMenu = """
-[ Drinks MENU ]
-1. Lemonade     | W 3.9 | 매장에서 직접 만드는 상큼한 레몬에이드
-2. Iced Tea     | W 3.4 | 직접 유기농 홍차를 우려낸 아이스티
-3. Fifty/Fifty  | W 3.5 | 레몬에이드와 아이스티의 만남
-4. Fountain Soda| W 2.7 | 코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프
-5. Root Beer    | W 4.4 | 청량감 있는 독특한 미국식 무알콜 탄산음료
-6. Bottled Water| W 1.0 | 지리산 암반대수층으로 만든 프리미엄 생수
-0. 뒤로가기      | 뒤로가기
-"""
-
-let beersMenu = """
-[ Beers MENU ]
-1. ShackMeister Ale  | W 9.8 | 쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주
-2. Magpie Brewing Co.| W 6.8 | Pale Ale / Draft
-0. 뒤로가기      | 뒤로가기
-"""
-*/
-
-//let drinksMenu = ["1. Lemonade     | W 3.9 | 매장에서 직접 만드는 상큼한 레몬에이드", "2. Iced Tea     | W 3.4 | 직접 유기농 홍차를 우려낸 아이스티", "3. Fifty/Fifty  | W 3.5 | 레몬에이드와 아이스티의 만남", "4. Fountain Soda| W 2.7 | 코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", "5. Root Beer    | W 4.4 | 청량감 있는 독특한 미국식 무알콜 탄산음료", "6. Bottled Water| W 1.0 | 지리산 암반대수층으로 만든 프리미엄 생수", "0. 뒤로가기      | 뒤로가기"]
-//
-//for drinks in drinksMenu{
-//    print(drinks)
-//}
-
-
-//while true {
-//    print(mainMenu)
-//    let number = Int(readLine()!)!
-//
-//    if number == 0 {
-//        print("프로그램을 종료합니다.")
-//        break
-//    } else if number == 1 {
-//        print(burgersMenu)
-//        let burgersNumber = Int(readLine()!)!
-//        if burgersNumber == 0 {}
-//        else {
-//            print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
-//        }
-//    } else if number == 3 {
-//    } else {
-//        print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
-//    }
-//}
+    if number == 0 {
+        print("프로그램을 종료합니다.")
+        break
+    } else if number == 1 {
+        print(burgersMenu)
+        let burgersNumber = Int(readLine()!)!
+        if burgersNumber == 0 {}
+        else {
+            print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+        }
+    } else if number == 3 {
+        drinks()
+    } else {
+        print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+    }
+}
