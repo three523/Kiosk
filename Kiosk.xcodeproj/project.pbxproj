@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		18CBEF9B2A6E0F4C0009113F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBEF9A2A6E0F4C0009113F /* main.swift */; };
 		18CBEFA42A6E7E2B0009113F /* Bear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBEFA32A6E7E2B0009113F /* Bear.swift */; };
+		7D2C75422A715B1F0032903C /* frogencustard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2C75412A715B1F0032903C /* frogencustard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +28,7 @@
 		18CBEF972A6E0F4C0009113F /* Kiosk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Kiosk; sourceTree = BUILT_PRODUCTS_DIR; };
 		18CBEF9A2A6E0F4C0009113F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		18CBEFA32A6E7E2B0009113F /* Bear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bear.swift; sourceTree = "<group>"; };
+		7D2C75412A715B1F0032903C /* frogencustard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frogencustard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 			children = (
 				18CBEF9A2A6E0F4C0009113F /* main.swift */,
 				18CBEFA32A6E7E2B0009113F /* Bear.swift */,
+				7D2C75412A715B1F0032903C /* frogencustard.swift */,
 			);
 			path = Kiosk;
 			sourceTree = "<group>";
@@ -125,6 +128,7 @@
 			files = (
 				18CBEF9B2A6E0F4C0009113F /* main.swift in Sources */,
 				18CBEFA42A6E7E2B0009113F /* Bear.swift in Sources */,
+				7D2C75422A715B1F0032903C /* frogencustard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,8 +252,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2FY7M8J988;
+				DEVELOPMENT_TEAM = P5YRX8S7XM;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -261,8 +266,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 784WC23TU5;
+				DEVELOPMENT_TEAM = P5YRX8S7XM;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
