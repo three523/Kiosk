@@ -66,13 +66,14 @@ let drinksMenu: [Drinks] = [
 ]
 
 func drinks() {
+    print("주문할 메뉴의 번호를 입력해주세요.")
+    print()
+    print("[ Drinks MENU ]")
+    for idx in 0..<drinksMenu.count {
+        drinksMenu[idx].displayInfo(at: idx)
+    }
+    print("0. 뒤로가기 | 뒤로가기")
     while true{
-        print("주문할 메뉴의 번호를 입력해주세요.")
-        print()
-        for idx in 0..<drinksMenu.count {
-            drinksMenu[idx].displayInfo(at: idx)
-        }
-        print("0. 뒤로가기 | 뒤로가기")
         let drinknumber = Int(readLine()!)!
         if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 || drinknumber == 6 {
             print("\(drinknumber)번 메뉴를 주문하시겠습니까?")
@@ -84,41 +85,44 @@ func drinks() {
                     print(drinksMenu[drinknumber].forHere)
                     break
                 } else if cupInput == "n" {
-                    drinksMenu[drinknumber - 1].forHere = !drinksMenu[drinknumber].forHere
+                    drinksMenu[drinknumber].forHere = !drinksMenu[drinknumber].forHere
                     print("음료가 일회용컵에 준비됩니다.")
-                    print(drinksMenu[drinknumber - 1].forHere)
-                    // 주문한 drinks 메뉴의 drinksMenu[drinknumber].forHere = true 인 경우 장바구니 total price에서 + 300
+                    print(drinksMenu[drinknumber].forHere)
+                    // drinksMenu[drinknumber].forHere = true 인 경우 price += 300
                     break
-                }
-                else {
+                } else {
                     print("잘못 입력되었습니다.")
                 }
             }
         } else if drinknumber == 0 {
-            break
+            main()
         } else {
             print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
         }
     }
 }
 
-while true {
+func main() {
     print(mainMenu)
-    let number = Int(readLine()!)!
-
-    if number == 0 {
-        print("프로그램을 종료합니다.")
-        break
-    } else if number == 1 {
-        print(burgersMenu)
-        let burgersNumber = Int(readLine()!)!
-        if burgersNumber == 0 {}
-        else {
+    while true {
+        let number = Int(readLine()!)!
+        
+        if number == 0 {
+            print("프로그램을 종료합니다.")
+            break
+        } else if number == 1 {
+//            print(burgersMenu)
+//            let burgersNumber = Int(readLine()!)!
+//            if burgersNumber == 0 {}
+//            else {
+//                print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+//            }
+        } else if number == 3 {
+            drinks()
+        } else {
             print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
         }
-    } else if number == 3 {
-        drinks()
-    } else {
-        print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
     }
 }
+
+main()
