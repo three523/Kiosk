@@ -42,8 +42,8 @@ class ItemList {
         self.description = description
     }
     
-    func displayInfo(number: Int) {
-        print("\(number+1). \(name) | W\(price) | \(description)")
+    func displayInfo(at index: Int) {
+        print("\(index + 1). \(name) | W\(price) | \(description)")
     }
 }
 
@@ -69,8 +69,8 @@ func drinks() {
     while true{
         print("주문할 메뉴의 번호를 입력해주세요.")
         print()
-        for i in 0..<drinksMenu.count {
-            drinksMenu[i].displayInfo(number: i)
+        for idx in 0..<drinksMenu.count {
+            drinksMenu[idx].displayInfo(at: idx)
         }
         print("0. 뒤로가기 | 뒤로가기")
         let drinknumber = Int(readLine()!)!
@@ -84,10 +84,10 @@ func drinks() {
                     print(drinksMenu[drinknumber].forHere)
                     break
                 } else if cupInput == "n" {
-                    drinksMenu[drinknumber].forHere = !drinksMenu[drinknumber].forHere
+                    drinksMenu[drinknumber - 1].forHere = !drinksMenu[drinknumber].forHere
                     print("음료가 일회용컵에 준비됩니다.")
-                    print(drinksMenu[drinknumber].forHere)
-                    // drinksMenu[drinknumber].forHere = true 인 경우 price += 300
+                    print(drinksMenu[drinknumber - 1].forHere)
+                    // 주문한 drinks 메뉴의 drinksMenu[drinknumber].forHere = true 인 경우 장바구니 total price에서 + 300
                     break
                 }
                 else {
