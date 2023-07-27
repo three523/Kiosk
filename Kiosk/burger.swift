@@ -7,31 +7,32 @@
 
 import Foundation
 
-class Burger { //burger클래스 추상화
-    var num: String
+class Burger { //burger클래스(붕어빵 틀) 추상화
+    //MARK: - Properties
     var name: String
     var price: String
-    var description: String
+    var description: String // (이게 프로퍼티 멤버변수)
     
-    init(num:String, name: String, price: String, description: String) {
-        self.num = num
-        self.name = name
+    init(name: String, price: String, description: String) { //생성자(init)가 매개변수(num)를 통해 값을 받으면
+        self.name = name //여기서 초기화해준다.
         self.price = price
         self.description = description
+    } //생성자가 끝나기 전에 프로퍼티(멤버변수)값을 초기화 해줘야 한다.
+    
+    func display(num: String) {
+        print("\(num)\(name) + | \(price) | + \(description)")
     }
     
-    func display() {
-        print("\(num). \(name) + | \(price) | + \(description)")
-    }
+    
+    
+    
+    
+    //Burger클래스의 인스턴스
+    //    var a : Burger = Burger(num: "1", name: "버거", price: "1000", description: "쉑쉑")
+    //    var b : Burger = Burger(num: "2", name: "버거버거", price: "2000", description: "맥날")
+    
+    
+    
+    
+    
 }
-
-
-//var 리스트변수: [클래스타입] = []
-let burgers: [Burger] = [
-    Burger(num: "1", name: "ShackBurger", price: "W 6.9", description: "토마토, 양상추, 쉑소스가 토핑된 치즈버거"),
-    Burger(num: "2", name: "SmokeShack" , price: "W 8.9", description: "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"),
-    Burger(num: "3", name: "Shroom Burger", price: "W 9.4", description: "몬스터 치즈와 체다 치즈로 속을 채운 베지테리안버거"),
-    Burger(num: "4", name: "Cheeseburger", price: "W 6.9", description: "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"),
-    Burger(num: "5", name: "Hamburger", price: "W 5.4", description: "비프패티를 기반으로 야채가 들어간 기본버거")
-]
-
