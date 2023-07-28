@@ -264,7 +264,7 @@ class Kiosk {
     }
     
     func payment(totalPrice: Double) {
-        var balance = 5.5
+        let balance = 5.5
         if totalPrice <= balance {
             print("결제되었습니다.")
         } else {
