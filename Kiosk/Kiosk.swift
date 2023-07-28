@@ -150,8 +150,8 @@ class Kiosk {
                 repeatMenu = false
             } else if drinknumber == 0 {
                 print()
+                repeatMenu = false
                 run()
-                //repeatMenu = false
             } else {
                 print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
             }
