@@ -21,3 +21,4 @@ var totalPrice: Double = 0
 
 let kiosk = Kiosk()
 kiosk.run()
+
