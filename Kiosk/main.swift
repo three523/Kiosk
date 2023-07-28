@@ -38,20 +38,19 @@ class ItemList {
 }
 
 class Drinks: ItemList {
-    //매장컵 이용할건지 Bool 타입으로 묻기
-    var forHere: Bool = true
+    var takeOut: Bool = true
     
-    init(name: String, price: Double, description: String, forHere: Bool) {
+    init(name: String, price: Double, description: String, takeOut: Bool) {
         super.init(name: name, price: price, description: description)
     }
 }
 
 let drinksMenu: [Drinks] = [
-    Drinks(name: "Lemonade", price: 3.9, description: "매장에서 직접 만드는 상큼한 레몬에이드", forHere: true),
-    Drinks(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티", forHere: true),
-    Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", forHere: true),
-    Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", forHere: true),
-    Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", forHere: true),
+    Drinks(name: "Lemonade", price: 3.9, description: "매장에서 직접 만드는 상큼한 레몬에이드", takeOut: true),
+    Drinks(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티", takeOut: true),
+    Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", takeOut: true),
+    Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
+    Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
 ]
 
 func drinks() {
@@ -84,11 +83,11 @@ func drinks() {
                     let cupInput = readLine()!
                     if cupInput == "y" {
                         totalPrice += 0.3
-                        drinksMenu[drinknumber - 1].forHere = !drinksMenu[drinknumber - 1].forHere
+                        drinksMenu[drinknumber - 1].takeOut = !drinksMenu[drinknumber - 1].takeOut
                         print("음료가 일회용컵에 준비됩니다.")
                         //print(drinksMenu[drinknumber - 1].forHere)
                         orders.append("일회용컵 +300원")
-                        // 주문한 drinks 메뉴의 forHere = false 인 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
+                        // 주문한 drinks 메뉴의 takeOut = true 인 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
                         break
                     } else if cupInput == "n" {
                         print("음료가 매장컵에 준비됩니다.")
