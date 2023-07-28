@@ -56,6 +56,17 @@ class Kiosk {
         Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", takeOut: true),
         Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
         Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
+        ]
+    var burgerShoppingBag: [Burger] = []
+
+    //var 리스트변수: [클래스타입] = []
+    let burgers: [Burger] = [
+        //붕어빵5개 - 같은 틀이지만 내용이 다르다 . 인스턴스가 다르다 ,burgers는 Burger라는 배열의 타입을 갖는다.
+        Burger(name: "ShackBurger", price: "W 6.9", description: "토마토, 양상추, 쉑소스가 토핑된 치즈버거"),
+        Burger(name: "SmokeShack" , price: "W 8.9", description: "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"),
+        Burger(name: "Shroom Burger", price: "W 9.4", description: "몬스터 치즈와 체다 치즈로 속을 채운 베지테리안버거"),
+        Burger(name: "Cheeseburger", price: "W 6.9", description: "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"),
+        Burger(name: "Hamburger", price: "W 5.4", description: "비프패티를 기반으로 야채가 들어간 기본버거")
     ]
     
     var shoppingBag: [Beer] = [] // 지금은 Bear로 되어있지만 Food 클래스를 만들어서 모든 음식들을 담을수 있는 shoppingBag 변수만들기
@@ -168,6 +179,65 @@ class Kiosk {
         print("[ Total ]")
         print("W \(totalPrice)")
     }
+    func burgerMenu() {
+        var showBurgerMenu = true
+        
+        while true {
+            if showBurgerMenu {
+                print("[ Burgers MENU ]")
+                for index in 0..<burgers.count {
+                    burgers[index].display(num: "\(index+1). ") //문자열템플릿
+                }
+                print("0. 뒤로가기 | 뒤로가기")
+            }
+            
+            guard let input = Int(readLine() ?? ""),  //??닐 병합연산자, 닐이면 ""반환, 아니면 readline반환 후 input에 값 대입
+                  input >= 0 && input <= burgers.count else {  // && 논리곱
+                print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+                showBurgerMenu = false
+                continue //잘못된 번호를 입력했을 때 return해서 다시 메인메뉴를 보여주는게 아니라 continue해서 다시 버거 메뉴를 보여줘야함.
+            }
+            print() // 숫자 입력하고 한 줄 띄워줌
+            
+            if input == 0 {
+                return //func burgerMenu()자체가 종료됨.
+            }
+                   
+            addBurgerInShoppingBag(burger: burgers[input-1])//guard let에 있는 input에 햄버거 번호가 들어오면 else문을 실행하지 않고 바로 여기로 와서 쇼핑백func가 돌아감.
+            
+            return
+        }
+    }
+    
+    func addBurgerInShoppingBag(burger: Burger) {
+        var showAddGuideLabel = true
+        while true {
+            if showAddGuideLabel {
+                burger.display(num: "")
+                print("위 메뉴를 장바구니에 추가하시겠습니까?")
+                print("1. 확인        2. 취소")
+            }
+            
+            showAddGuideLabel = true
+            
+            guard let input = Int(readLine() ?? ""),
+                  input == 1 || input == 2 else {
+                showAddGuideLabel = false
+                continue
+            }
+            
+            if input == 1 {
+                print("\(burger.name)이(가) 장바구니에 추가되었습니다.")
+                burgerShoppingBag.append(burger)
+                print()
+                return
+            } else {
+                print("장바구니에 메뉴를 추가하세요.")
+                print()
+                return
+            }
+        }
+    }
     
     func addShoppingBag(beer: Beer) {
         print("\(beer.name)을 장바구니에 담으시겠습니까? (y/n)")
@@ -196,7 +266,7 @@ class Kiosk {
             guard let input = readLine() else { return }
             switch MainMenu(rawValue: input) {
             case.burger:
-                print("Burger")
+                burgerMenu()
             case.fronzenCustard:
                 print("FronzenCustard")
             case.drink:
