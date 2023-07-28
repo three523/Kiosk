@@ -19,6 +19,31 @@ enum MainMenu: String {
 var orders: [String] = ["비어있음"]
 var totalPrice: Double = 0
 
+class SponService {
+    func serviceSpon() {
+        
+        print("스푼 드릴까요? \n1번: o , 2번: x")
+        
+        guard let input1 = readLine(), let selectedOption1 = Int(input1) else {
+            print("잘못된 입력입니다. 숫자를 입력해주세요.")
+            return
+        }
+        
+        switch selectedOption1 {
+        case 1:
+            print("spon 드리기")
+            
+        case 2:
+            print("spon 안드리기")
+            
+        default:
+            print("잘못된 입력입니다.")
+            serviceSpon()
+            
+        }
+    }
+}
+
 
 class ItemList {
     var name: String
@@ -56,9 +81,9 @@ class Kiosk {
         Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", takeOut: true),
         Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
         Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
-        ]
+    ]
     var burgerShoppingBag: [Burger] = []
-
+    
     //var 리스트변수: [클래스타입] = []
     let burgers: [Burger] = [
         //붕어빵5개 - 같은 틀이지만 내용이 다르다 . 인스턴스가 다르다 ,burgers는 Burger라는 배열의 타입을 갖는다.
@@ -68,19 +93,53 @@ class Kiosk {
         Burger(name: "Cheeseburger", price: "W 6.9", description: "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"),
         Burger(name: "Hamburger", price: "W 5.4", description: "비프패티를 기반으로 야채가 들어간 기본버거")
     ]
-    
-    var shoppingBag: [Beer] = [] // 지금은 Bear로 되어있지만 Food 클래스를 만들어서 모든 음식들을 담을수 있는 shoppingBag 변수만들기
+    let frozenMenu = """
+[ Frozen Custard MENU ]
+1. Shakes     | W 5.9 | 바닐라 / 초콜릿 / 솔티드 카라멜 / 스트로베리 / 피넛버터 /커피
+2. Float      | W 5.9 | 루트 비어 / 퍼플 카우 / 크림시클
+3. Cups&Cones | W 4.9 | 바닐라 / 초콜렛
+0. 뒤로가기     | 뒤로가기
+"""
     
     func showBaseMenu() {
         print("""
-        아래 메뉴판을 보시고 메뉴를 골라 번호를 입력해주세요.
-        [ SHAKESHACK MENU ]
-        1. Burgers         | 앵거스 비프 통살을 다져만든 버거
-        2. Frozen Custard  | 매장에서 신선하게 만드는 아이스크림
-        3. Drinks          | 매장에서 직접 만드는 음료
-        4. Beer            | 뉴욕 브루클린 브루어리에서 양조한 맥주
-        0. 종료            | 프로그램 종료
-        """)
+            아래 메뉴판을 보시고 메뉴를 골라 번호를 입력해주세요.
+            [ SHAKESHACK MENU ]
+            1. Burgers         | 앵거스 비프 통살을 다져만든 버거
+            2. Frozen Custard  | 매장에서 신선하게 만드는 아이스크림
+            3. Drinks          | 매장에서 직접 만드는 음료
+            4. Beer            | 뉴욕 브루클린 브루어리에서 양조한 맥주
+            0. 종료            | 프로그램 종료
+            """)
+    }
+    
+    
+    func displayFrozenMenu() {
+        
+        print(frozenMenu)
+        
+        guard let input = readLine(), let selectedOption = Int(input) else {
+            print("잘못된 입력입니다. 숫자를 입력해주세요.")
+            return
+        }
+        
+        switch selectedOption {
+            
+        case 1:
+            print("Shakes를 선택하셨습니다.")
+            let sponService = SponService()
+            sponService.serviceSpon()
+            
+        case 2:
+            print("Float를 선택하셨습니다.")
+            
+        case 3:
+            print("Cups&Cones를 선택하셨습니다.")
+        case 0:
+            print("뒤로가기를 선택하셨습니다") // 뒤로가기, 함수 종료
+        default:
+            print("잘못된 번호를 선택하셨습니다.")
+        }
     }
     
     func beerMenu() {
@@ -168,7 +227,7 @@ class Kiosk {
             }
         }
     }
-
+    
     func showShoppingBag() {
         print ("아래와 같이 주문 하시겠습니까?")
         print("[ Orders ]")
@@ -202,7 +261,7 @@ class Kiosk {
             if input == 0 {
                 return //func burgerMenu()자체가 종료됨.
             }
-                   
+            
             addBurgerInShoppingBag(burger: burgers[input-1])//guard let에 있는 input에 햄버거 번호가 들어오면 else문을 실행하지 않고 바로 여기로 와서 쇼핑백func가 돌아감.
             
             return
@@ -245,15 +304,8 @@ class Kiosk {
             print("잘못입력하였습니다.")
             return
         }
-        if result == "y" {
-            shoppingBag.append(beer)
-            print("\(beer.name)이 담겼습니다.")
-        } else if result == "n" {
-            print("\(beer.name)을 담지 않습니다.")
-        } else {
-            print("잘못입력하였습니다.")
-        }
     }
+    
     
     func showShoppingBagPrice() -> Int {
         // 쇼핑백에 있는 음식들의 가격 총합을 반환하는 함수
@@ -268,7 +320,7 @@ class Kiosk {
             case.burger:
                 burgerMenu()
             case.fronzenCustard:
-                print("FronzenCustard")
+                displayFrozenMenu()
             case.drink:
                 drinks()
             case.beer:
@@ -282,6 +334,8 @@ class Kiosk {
         }
     }
 }
+
+
 
 let kiosk = Kiosk()
 kiosk.run()
