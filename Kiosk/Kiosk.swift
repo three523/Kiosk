@@ -18,7 +18,7 @@ class Kiosk {
         Drinks(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티", takeOut: true),
         Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", takeOut: true),
         Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
-        Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
+        Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true)
     ]
     var burgerShoppingBag: [Burger] = []
     
@@ -30,6 +30,14 @@ class Kiosk {
         Burger(name: "Shroom Burger", price: "W 9.4", description: "몬스터 치즈와 체다 치즈로 속을 채운 베지테리안버거"),
         Burger(name: "Cheeseburger", price: "W 6.9", description: "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"),
         Burger(name: "Hamburger", price: "W 5.4", description: "비프패티를 기반으로 야채가 들어간 기본버거")
+    ]
+    
+        
+    let frozenMenu: [FrogenCustard] = [
+        FrogenCustard(name: "Shakes", price: "W 5.9", description: "바닐라 / 초콜릿 / 솔티드 카라멜 / 스트로베리 / 피넛버터 /커피"),
+        FrogenCustard(name: "Float" , price: "W 5.9", description: "루트 비어 / 퍼플 카우 / 크림시클"),
+        FrogenCustard(name: "Cups&Cones", price: "W 4.9", description: "바닐라 / 초콜렛"),
+        
     ]
     
     func showBaseMenu() {
@@ -45,8 +53,15 @@ class Kiosk {
     }
     
     
+    
     func displayFrozenMenu() {
         
+        print("[ FROGENCUSTARD MENU ]")
+        
+        for index in 0..<frozenMenu.count {
+            frozenMenu[index].display(num: index+1)
+        }
+        print("0.뒤로가기")
         
         guard let input = readLine(), let selectedOption = Int(input) else {
             print("잘못된 입력입니다. 숫자를 입력해주세요.")
@@ -57,7 +72,9 @@ class Kiosk {
             
         case 1:
             print("Shakes를 선택하셨습니다.")
-            
+            let frozen = frozenMenu[1]
+            frozen.serviceSpon()
+        
         case 2:
             print("Float를 선택하셨습니다.")
             
@@ -100,53 +117,45 @@ class Kiosk {
             drinksMenu[idx].displayInfo(at: idx)
         }
         print("0. 뒤로가기 | 뒤로가기")
-        while true {
-            let drinknumber = Int(readLine()!)!
+        addToShoppingBag()
+    }
+    
+    func addToShoppingBag() {
+        var repeatMenu = true
+        
+        while repeatMenu {
+            guard let drinknumber = readLine(),
+                  let drinknumber = Int(drinknumber) else { return }
             if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
                 // 장바구니 함수
                 print("\(drinksMenu[drinknumber - 1].name)를 장바구니에 추가하시겠습니까?")
                 print("1. 확인        2. 취소")
-                let addBagInput = readLine()!
-                if addBagInput == "1" {
+                guard let addBagInput = readLine(),
+                      let addBagInput = Int(addBagInput) else { return }
+                if addBagInput == 1 {
                     print("\(drinksMenu[drinknumber - 1].name)가 장바구니에 추가되었습니다.")
                     // totalPrice 에 + drinksMenu[drinknumber - 1].price
                     totalPrice += drinksMenu[drinknumber - 1].price
                     // 장바구니 [Orders] 에 추가
-                    if orders.first == "비어있음" {
-                        orders[0] = ("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
-                    } else {
-                        orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
-                    }
-                    while true {
-                        print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
-                        let cupInput = readLine()!
-                        if cupInput == "y" {
-                            totalPrice += 0.3
-                            print("음료가 일회용컵에 준비됩니다.")
-                            orders.append("일회용컵 +300원")
-                            drinksMenu[drinknumber - 1].takeOut = true
-                            // 테이크 아웃 하시겠습니까? y 선택할 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
-                            print(drinksMenu[drinknumber - 1].takeOut)
-                            break
-                        } else if cupInput == "n" {
-                            print("음료가 매장컵에 준비됩니다.")
-                            drinksMenu[drinknumber - 1].takeOut = false
-                            print(drinksMenu[drinknumber - 1].takeOut)
-                            break
-                        } else {
-                            print("잘못 입력되었습니다.")
-                        }
-                    }
-                } else if addBagInput == "2" {
+                    orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
+                    takeOut(drinknumber: addBagInput)
+                } else if addBagInput == 2 {
                     print("취소되었습니다.")
                 }
-                print("1. 메인 메뉴로 이동 2. 장바구니로 이동")
-                let goToInput = readLine()!
-                if goToInput == "1" {
-                    return
-                } else if goToInput == "2" {
-                    // 장바구니 [Orders] 로 이동
-                    showShoppingBag()
+                var repeatAddToShoppingBag = true
+                while repeatAddToShoppingBag {
+                    print("1. 메인 메뉴로 이동 2. 장바구니로 이동")
+                    guard let goToInput = readLine() else { return }
+                    if goToInput == "1" {
+                        return
+                    } else if goToInput == "2" {
+                        // 장바구니 [Orders] 로 이동
+                        repeatAddToShoppingBag = false
+                        showShoppingBag(repeatMenu: repeatMenu)
+                        return
+                    } else {
+                        print("잘못 입력되었습니다.")
+                    }
                 }
             } else if drinknumber == 0 {
                 return
@@ -156,16 +165,64 @@ class Kiosk {
         }
     }
     
-    func showShoppingBag() {
+    func takeOut(drinknumber: Int) {
+        while true{
+            print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
+            guard let cupInput = readLine() else { return }
+            if cupInput == "y" {
+                totalPrice += 0.3
+                print("음료가 일회용컵에 준비됩니다.")
+                orders.append("일회용컵 | W 0.3")
+                drinksMenu[drinknumber - 1].takeOut = true
+                break
+            } else if cupInput == "n" {
+                print("음료가 매장컵에 준비됩니다.")
+                drinksMenu[drinknumber - 1].takeOut = false
+                break
+            } else {
+                print("잘못 입력되었습니다.")
+            }
+        }
+    }
+    
+    
+    func showShoppingBag(repeatMenu: Bool) {
         print ("아래와 같이 주문 하시겠습니까?")
+        print()
         print("[ Orders ]")
-        for order in orders{
-            print(order)
+        if orders.isEmpty {
+            print("장바구니가 비어있습니다.")
+        } else {
+            for order in orders{
+                print(order)
+            }
         }
         print()
-        print("[ Total ]")
-        print("W \(totalPrice)")
+        print("""
+        [ Total ]
+        W \(round(totalPrice * 100) / 100)
+        
+        1. 계속 쇼핑하기     2. 결제하기
+        """)
+        guard let finalOption = readLine(),
+              let finalOption = Int(finalOption) else { return }
+        if finalOption == 1 {
+            run()
+        } else if finalOption == 2 {
+            payment(totalPrice: totalPrice, repeatMenu: repeatMenu)
+        }
     }
+    
+    func payment(totalPrice: Double, repeatMenu: Bool) {
+        let balance = 5.5
+        if totalPrice <= balance {
+            var repeatMenu = false
+            print("결제되었습니다.")
+        } else {
+            print("현재 잔액은 W \(balance) 로 W \(round((totalPrice - balance) * 100) / 100) 이 부족해서 주문할 수 없습니다.")
+        }
+    }
+    
     func burgerMenu() {
         var showBurgerMenu = true
         
@@ -262,5 +319,3 @@ class Kiosk {
         }
     }
 }
-
-
