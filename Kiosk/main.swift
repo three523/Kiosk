@@ -160,7 +160,9 @@ class Kiosk {
     }
     
     func addToShoppingBag() {
-        while true {
+        var repeatMenu = true
+        
+        while repeatMenu {
             guard let drinknumber = readLine(),
                   let drinknumber = Int(drinknumber) else { return }
             if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
@@ -179,14 +181,17 @@ class Kiosk {
                 } else if addBagInput == 2 {
                     print("취소되었습니다.")
                 }
-                while true {
+                var repeatAddToShoppingBag = true
+                while repeatAddToShoppingBag {
                     print("1. 메인 메뉴로 이동 2. 장바구니로 이동")
                     guard let goToInput = readLine() else { return }
                     if goToInput == "1" {
                         return
                     } else if goToInput == "2" {
                         // 장바구니 [Orders] 로 이동
-                        showShoppingBag()
+                        repeatAddToShoppingBag = false
+                        showShoppingBag(repeatMenu: repeatMenu)
+                        return
                     } else {
                         print("잘못 입력되었습니다.")
                     }
@@ -220,7 +225,7 @@ class Kiosk {
     }
     
     
-    func showShoppingBag() {
+    func showShoppingBag(repeatMenu: Bool) {
         print ("아래와 같이 주문 하시겠습니까?")
         print()
         print("[ Orders ]")
@@ -243,13 +248,14 @@ class Kiosk {
         if finalOption == 1 {
             run()
         } else if finalOption == 2 {
-            payment(totalPrice: totalPrice)
+            payment(totalPrice: totalPrice, repeatMenu: repeatMenu)
         }
     }
     
-    func payment(totalPrice: Double) {
+    func payment(totalPrice: Double, repeatMenu: Bool) {
         let balance = 5.5
         if totalPrice <= balance {
+            var repeatMenu = false
             print("결제되었습니다.")
         } else {
             print("현재 잔액은 W \(balance) 로 W \(round((totalPrice - balance) * 100) / 100) 이 부족해서 주문할 수 없습니다.")
