@@ -289,14 +289,40 @@ class Kiosk {
                 print("\(burger.name)이(가) 장바구니에 추가되었습니다.")
                 burgerShoppingBag.append(burger)
                 print()
-                return
             } else {
                 print("장바구니에 메뉴를 추가하세요.")
+                print()
+            }
+            takeoutBurger()
+             return
+        }
+    }
+    
+    func takeoutBurger() {
+        var takeout = true
+        while true {
+            if takeout {
+                print("식사 장소를 선택해주세요.")
+                print("1. 매장식사        2. 포장주문")
+            }
+            takeout = true
+            guard let input = Int(readLine() ?? ""),
+                  input == 1 || input == 2 else {
+                takeout = false
+                continue
+            }
+            if input == 1 {
+                print("매장식사가 선택되었습니다.")
+                print()
+                return
+            } else {
+                print("포장주문이 선택되었습니다.")
                 print()
                 return
             }
         }
     }
+    
     
     func addShoppingBag(beer: Beer) {
         print("\(beer.name)을 장바구니에 담으시겠습니까? (y/n)")
