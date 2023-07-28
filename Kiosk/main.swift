@@ -124,7 +124,7 @@ class SponService{
     }
     
     
-    
+      
         while true {
         print(mainMenu)
         let number = Int(readLine()!)!
@@ -157,10 +157,9 @@ class SponService{
             
             //메소드를 개선해서 lv1 코드를 개선
             
+            // 감사합니다
             
-            
-            
-            
+           
         }
     }
     
