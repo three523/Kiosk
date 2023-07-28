@@ -17,7 +17,7 @@ enum MainMenu: String {
 }
 
 var orders: [String] = []
-var totalPrice: Double = 0
+var totalPrice: Int = 0
 
-let kiosk = Kiosk.init()
+let kiosk = Kiosk()
 kiosk.run()

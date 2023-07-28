@@ -10,17 +10,18 @@ import Foundation
 class Kiosk {
     // 버거 프로퍼티, 아이스크림 프로퍼티, 음료 프로퍼티 추가하기
     var beers: [Beer] = [
-        Beer(name: "ShackMeister Ale", description: "쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주", price: 9800),
-        Beer(name: "Magpie Brewing Co.", description: "Pale Ale / Draft", price: 6800)
+        Beer(name: "ShackMeister Ale", price: 9800, description: "쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주"),
+        Beer(name: "Magpie Brewing Co.", price: 6800, description: "Pale Ale / Draft")
     ]
     let drinksMenu: [Drinks] = [
-        Drinks(name: "Lemonade", price: 3.9, description: "매장에서 직접 만드는 상큼한 레몬에이드", takeOut: true),
-        Drinks(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티", takeOut: true),
-        Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", takeOut: true),
-        Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
-        Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
+        Drinks(name: "Lemonade", price: 3900, description: "매장에서 직접 만드는 상큼한 레몬에이드", takeOut: true),
+        Drinks(name: "Iced Tea", price: 3400, description: "직접 유기농 홍차를 우려낸 아이스티", takeOut: true),
+        Drinks(name: "Fifty/Fifty", price: 3500, description: "레몬에이드와 아이스티의 만남", takeOut: true),
+        Drinks(name: "Fountain Soda", price: 2700, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
+        Drinks(name: "Root Beer", price: 4400, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
     ]
     var burgerShoppingBag: [Burger] = []
+    var shoppingBag: [Food] = []
     
     //var 리스트변수: [클래스타입] = []
     let burgers: [Burger] = [
@@ -87,7 +88,7 @@ class Kiosk {
             if index == -1 {
                 return
             } else {
-                addShoppingBag(beer: beers[index])
+                addShoppingBag(food: beers[index])
             }
         }
     }
@@ -121,7 +122,7 @@ class Kiosk {
                         print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
                         let cupInput = readLine()!
                         if cupInput == "y" {
-                            totalPrice += 0.3
+                            totalPrice += 300
                             print("음료가 일회용컵에 준비됩니다.")
                             orders.append("일회용컵 +300원")
                             drinksMenu[drinknumber - 1].takeOut = true
@@ -221,26 +222,55 @@ class Kiosk {
             } else {
                 print("장바구니에 메뉴를 추가하세요.")
                 print()
+            }
+            takeoutBurger()
+             return
+        }
+    }
+
+    func takeoutBurger() {
+        var takeout = true
+        while true {
+            if takeout {
+                print("식사 장소를 선택해주세요.")
+                print("1. 매장식사        2. 포장주문")
+            }
+            takeout = true
+            guard let input = Int(readLine() ?? ""),
+                  input == 1 || input == 2 else {
+                takeout = false
+                continue
+            }
+            if input == 1 {
+                print("매장식사가 선택되었습니다.")
+                print()
                 return
+            } else {
+                print("포장주문이 선택되었습니다.")
+                print()
             }
         }
     }
     
-    func addShoppingBag(beer: Beer) {
-        print("\(beer.name)을 장바구니에 담으시겠습니까? (y/n)")
+    func addShoppingBag(food: Food) {
+        print("\(food.name)을 장바구니에 담으시겠습니까? (y/n)")
         guard let result = readLine() else {
             print("잘못입력하였습니다.")
             return
         }
+        shoppingBag.append(food)
     }
     
     
     func showShoppingBagPrice() -> Int {
-        // 쇼핑백에 있는 음식들의 가격 총합을 반환하는 함수
-        return 0
+        var resultPrice = 0
+        shoppingBag.forEach { food in
+            resultPrice += food.price
+        }
+        return resultPrice
     }
     
-    func run() {
+    func managerMode() {
         while true {
             showBaseMenu()
             guard let input = readLine() else { return }
@@ -257,6 +287,47 @@ class Kiosk {
                 print("종료되었습니다")
                 return
             case .none:
+                print("잘못된 입력입니다.")
+            }
+        }
+    }
+    
+    func userMode() {
+        while true {
+            showBaseMenu()
+            guard let input = readLine() else { return }
+            switch MainMenu(rawValue: input) {
+            case.burger:
+                burgerMenu()
+            case.fronzenCustard:
+                displayFrozenMenu()
+            case.drink:
+                drinks()
+            case.beer:
+                beerMenu()
+            case.exit:
+                print("종료되었습니다")
+                return
+            case .none:
+                print("잘못된 입력입니다.")
+            }
+        }
+    }
+    
+    func run() {
+        while true {
+            print("1. 관리자 모드")
+            print("2. 사용자 모드")
+            print("0. 종료")
+            guard let input = readLine() else { continue }
+            if input == "1" {
+                managerMode()
+            } else if input == "2" {
+                userMode()
+            } else if input == "0" {
+                print("프로그램을 종료합니다.")
+                return
+            } else {
                 print("잘못된 입력입니다.")
             }
         }

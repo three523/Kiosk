@@ -1,20 +1,6 @@
 import Foundation
 
-class FrogenCustard {
-    var name: String
-    var price: String
-    var description: String
-    
-    init(name: String, price: String, description: String) {
-        self.name = name
-        self.price = price
-        self.description = description
-    }
-    
-    func display(num: Int) {
-        print("\(num).\(name) + | \(price) | + \(description)")
-    }
-    
+class FrogenCustard: Food {
     func serviceSpon() {
         
         print("스푼 드릴까요? \n1번: o , 2번: x")

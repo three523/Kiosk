@@ -10,7 +10,7 @@ import Foundation
 class Drinks: Food {
     var takeOut: Bool = true
     
-    init(name: String, price: Double, description: String, takeOut: Bool) {
+    init(name: String, price: Int, description: String, takeOut: Bool) {
         super.init(name: name, price: price, description: description)
     }
 }

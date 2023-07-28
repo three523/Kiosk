@@ -9,10 +9,10 @@ import Foundation
 
 class Food {
     var name: String
-    var price: Double
+    var price: Int
     var description: String
     
-    init(name: String, price: Double, description: String) {
+    init(name: String, price: Int, description: String) {
         self.name = name
         self.price = price
         self.description = description
