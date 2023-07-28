@@ -1,19 +1,19 @@
 import Foundation
 
-class FrogenCustard {
-    var name: String
-    var price: String
-    var description: String
-    
-    init(name: String, price: String, description: String) {
-        self.name = name
-        self.price = price
-        self.description = description
-    }
-    
-    func display(num: Int) {
-        print("\(num).\(name) + | \(price) | + \(description)")
-    }
+class FrogenCustard: Food {
+//    var name: String
+//    var price: String
+//    var description: String
+//
+//    init(name: String, price: String, description: String) {
+//        self.name = name
+//        self.price = price
+//        self.description = description
+//    }
+//
+//    func display(num: Int) {
+//        print("\(num).\(name) + | \(price) | + \(description)")
+//    }
     
     func serviceSpon() {
         
