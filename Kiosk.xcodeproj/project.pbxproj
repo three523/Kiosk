@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		18CBEF9B2A6E0F4C0009113F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBEF9A2A6E0F4C0009113F /* main.swift */; };
 		18CBEFA42A6E7E2B0009113F /* Bear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBEFA32A6E7E2B0009113F /* Bear.swift */; };
+		7D2C75422A715B1F0032903C /* frogencustard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2C75412A715B1F0032903C /* frogencustard.swift */; };
 		C32E225A2A6E7D39007D98F1 /* burger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32E22592A6E7D39007D98F1 /* burger.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		18CBEF972A6E0F4C0009113F /* Kiosk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Kiosk; sourceTree = BUILT_PRODUCTS_DIR; };
 		18CBEF9A2A6E0F4C0009113F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		18CBEFA32A6E7E2B0009113F /* Bear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bear.swift; sourceTree = "<group>"; };
+		7D2C75412A715B1F0032903C /* frogencustard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frogencustard.swift; sourceTree = "<group>"; };
 		C32E22592A6E7D39007D98F1 /* burger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = burger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +66,7 @@
 				18CBEF9A2A6E0F4C0009113F /* main.swift */,
 				18CBEFA32A6E7E2B0009113F /* Bear.swift */,
 				C32E22592A6E7D39007D98F1 /* burger.swift */,
+				7D2C75412A715B1F0032903C /* frogencustard.swift */,
 			);
 			path = Kiosk;
 			sourceTree = "<group>";
@@ -129,6 +132,7 @@
 				C32E225A2A6E7D39007D98F1 /* burger.swift in Sources */,
 				18CBEF9B2A6E0F4C0009113F /* main.swift in Sources */,
 				18CBEFA42A6E7E2B0009113F /* Bear.swift in Sources */,
+				7D2C75422A715B1F0032903C /* frogencustard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +256,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2FY7M8J988;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -265,6 +270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2FY7M8J988;
 				ENABLE_HARDENED_RUNTIME = YES;

@@ -22,17 +22,4 @@ class Burger { //burger클래스(붕어빵 틀) 추상화
     func display(num: String) {
         print("\(num)\(name) + | \(price) | + \(description)")
     }
-    
-    
-    
-    
-    
-    //Burger클래스의 인스턴스
-    //    var a : Burger = Burger(num: "1", name: "버거", price: "1000", description: "쉑쉑")
-    //    var b : Burger = Burger(num: "2", name: "버거버거", price: "2000", description: "맥날")
-    
-    
-    
-    
-    
 }
