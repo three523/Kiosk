@@ -16,7 +16,7 @@ enum MainMenu: String {
     case exit = "0"
 }
 
-var orders: [String] = ["비어있음"]
+var orders: [String] = []
 var totalPrice: Double = 0
 
 class SponService {
@@ -80,7 +80,7 @@ class Kiosk {
         Drinks(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티", takeOut: true),
         Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", takeOut: true),
         Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
-        Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
+        Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true)
     ]
     var burgerShoppingBag: [Burger] = []
     
@@ -173,71 +173,65 @@ class Kiosk {
         }
         print("0. 뒤로가기 | 뒤로가기")
         while true {
-            let drinknumber = Int(readLine()!)!
-            if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
-                // 장바구니 함수
-                print("\(drinksMenu[drinknumber - 1].name)를 장바구니에 추가하시겠습니까?")
-                print("1. 확인        2. 취소")
-                let addBagInput = readLine()!
-                if addBagInput == "1" {
-                    print("\(drinksMenu[drinknumber - 1].name)가 장바구니에 추가되었습니다.")
-                    // totalPrice 에 + drinksMenu[drinknumber - 1].price
-                    totalPrice += drinksMenu[drinknumber - 1].price
-                    // 장바구니 [Orders] 에 추가
-                    if orders.first == "비어있음" {
-                        orders[0] = ("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
-                    } else {
-                        orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
-                    }
-                    while true {
-                        print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
-                        let cupInput = readLine()!
-                        if cupInput == "y" {
-                            totalPrice += 0.3
-                            print("음료가 일회용컵에 준비됩니다.")
-                            orders.append("일회용컵 +300원")
-                            drinksMenu[drinknumber - 1].takeOut = true
-                            // 테이크 아웃 하시겠습니까? y 선택할 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
-                            print(drinksMenu[drinknumber - 1].takeOut)
-                            break
-                        } else if cupInput == "n" {
-                            print("음료가 매장컵에 준비됩니다.")
-                            drinksMenu[drinknumber - 1].takeOut = false
-                            print(drinksMenu[drinknumber - 1].takeOut)
-                            break
-                        } else {
-                            print("잘못 입력되었습니다.")
-                        }
-                    }
-                } else if addBagInput == "2" {
-                    print("취소되었습니다.")
+            addToShoppingBag()
+        }
+    }
+    
+    func addToShoppingBag() {
+        guard let drinknumber = readLine(),
+              let drinknumber = Int(drinknumber) else { return }
+        if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
+            // 장바구니 함수
+            print("\(drinksMenu[drinknumber - 1].name)를 장바구니에 추가하시겠습니까?")
+            print("1. 확인        2. 취소")
+            guard let addBagInput = readLine(),
+                  let addBagInput = Int(addBagInput) else { return }
+            if addBagInput == 1 {
+                print("\(drinksMenu[drinknumber - 1].name)가 장바구니에 추가되었습니다.")
+                // totalPrice 에 + drinksMenu[drinknumber - 1].price
+                totalPrice += drinksMenu[drinknumber - 1].price
+                // 장바구니 [Orders] 에 추가
+                orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
+                while true {
+                    
                 }
+            } else if addBagInput == 2 {
+                print("취소되었습니다.")
+            }
+            while true {
                 print("1. 메인 메뉴로 이동 2. 장바구니로 이동")
-                let goToInput = readLine()!
+                guard let goToInput = readLine() else { return }
                 if goToInput == "1" {
                     return
                 } else if goToInput == "2" {
                     // 장바구니 [Orders] 로 이동
                     showShoppingBag()
+                } else {
+                    print("잘못 입력되었습니다.")
                 }
-            } else if drinknumber == 0 {
-                return
-            } else {
-                print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
             }
+        } else if drinknumber == 0 {
+            return
+        } else {
+            print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
         }
     }
     
     func showShoppingBag() {
         print ("아래와 같이 주문 하시겠습니까?")
         print("[ Orders ]")
-        for order in orders{
-            print(order)
+        if orders.isEmpty {
+            print("장바구니가 비어있습니다.")
+        } else {
+            for order in orders{
+                print(order)
+            }
         }
         print()
         print("[ Total ]")
         print("W \(totalPrice)")
     }
+    
     func burgerMenu() {
         var showBurgerMenu = true
         
