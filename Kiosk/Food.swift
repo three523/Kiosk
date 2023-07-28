@@ -26,3 +26,4 @@ class Food {
         return Food(name: name, price: price, description: description)
     }
 }
+

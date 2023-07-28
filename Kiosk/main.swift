@@ -18,3 +18,4 @@ enum MainMenu: String {
 
 let kiosk = Kiosk()
 kiosk.run()
+

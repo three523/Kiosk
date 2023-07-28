@@ -23,3 +23,4 @@ class Drinks: Food {
         return Drinks(name: name, price: price, description: description, takeOut: takeOut)
     }
 }
+

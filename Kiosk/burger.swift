@@ -23,3 +23,4 @@ class Burger: Food { //burger클래스(붕어빵 틀) 추상화
 //        print("\(num)\(name) + | \(price) | + \(description)")
 //    }
 }
+
