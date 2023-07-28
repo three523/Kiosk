@@ -14,3 +14,4 @@ class Drinks: Food {
         super.init(name: name, price: price, description: description)
     }
 }
+

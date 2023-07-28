@@ -136,9 +136,7 @@ class Kiosk {
                       let addBagInput = Int(addBagInput) else { return }
                 if addBagInput == 1 {
                     print("\(drinksMenu[drinknumber - 1].name)이(가) 장바구니에 추가되었습니다.")
-                    // totalPrice 에 + drinksMenu[drinknumber - 1].price
                     totalPrice += drinksMenu[drinknumber - 1].price
-                    // 장바구니 [Orders] 에 추가
                     orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
                     takeOut(drinknumber: addBagInput)
                 } else if addBagInput == 2 {
@@ -360,3 +358,4 @@ class Kiosk {
         }
     }
 }
+
