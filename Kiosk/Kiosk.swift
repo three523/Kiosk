@@ -298,7 +298,9 @@ class Kiosk {
     }
     
     func run() {
-        while true {
+        var run = true
+        
+        while run {
             showBaseMenu()
             guard let input = readLine() else { return }
             switch MainMenu(rawValue: input) {
@@ -308,6 +310,7 @@ class Kiosk {
                 displayFrozenMenu()
             case.drink:
                 drinks()
+                run = false
             case.beer:
                 beerMenu()
             case.exit:
