@@ -105,9 +105,9 @@ class Kiosk {
                 print()
                 run()
             } else {
-                showBeerMenu = false
                 addShoppingBag(beer: beers[index])
             }
+            showBeerMenu = false
         }
     }
     
