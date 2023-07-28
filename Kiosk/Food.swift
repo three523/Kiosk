@@ -21,4 +21,8 @@ class Food {
     func displayInfo(at index: Int) {
         print("\(index + 1). \(name) | W \(price) | \(description)")
     }
+    
+    func create() -> Food {
+        return Food(name: name, price: price, description: description)
+    }
 }

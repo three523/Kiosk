@@ -135,8 +135,7 @@ class Kiosk {
                 print()
                 run()
             } else {
-                let drink = drinksMenu[index]
-                addShoppingBag(food: drinksMenu[index])
+                addShoppingBag(food: drinksMenu[index].create())
             }
             showBeerMenu = false
         }
@@ -213,9 +212,11 @@ class Kiosk {
             
             if input == 1 {
                 print("\(food.name)이(가) 장바구니에 추가되었습니다.")
-                shoppingBag.append(food)
                 if let drink = food as? Drinks {
                     takeOut(drink: drink)
+                    shoppingBag.append(drink)
+                } else {
+                    shoppingBag.append(food)
                 }
                 print()
                 break
@@ -262,7 +263,7 @@ class Kiosk {
             print("장바구니가 비어있습니다.")
         } else {
             for index in 0..<shoppingBag.count {
-                print(shoppingBag[index].displayInfo(at: index))
+                shoppingBag[index].displayInfo(at: index)
             }
         }
         let totalPrice = showTotalPrice()

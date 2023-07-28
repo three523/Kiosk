@@ -18,4 +18,8 @@ class Drinks: Food {
         self.takeOut = takeOut
         super.init(name: name, price: price, description: description)
     }
+    
+    override func create() -> Food {
+        return Drinks(name: name, price: price, description: description, takeOut: takeOut)
+    }
 }
