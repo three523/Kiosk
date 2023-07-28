@@ -158,26 +158,6 @@ class Kiosk {
         }
     }
     
-    func goToMenu() {
-        var repeatGoToMenu = true
-        
-        while repeatGoToMenu {
-            print("1. 메인 메뉴로 이동        2. 장바구니로 이동")
-            guard let goToInput = readLine() else { return }
-            if goToInput == "1" {
-                repeatGoToMenu = false
-                print()
-                run()
-            } else if goToInput == "2" {
-                // 장바구니 [Orders] 로 이동
-                repeatGoToMenu = false
-                showShoppingBag()
-            } else {
-                print("잘못 입력되었습니다.")
-            }
-        }
-    }
-    
     func takeOut(drinknumber: Int) {
         while true{
             print("테이크 아웃 하시겠습니까? (테이크 아웃 시 일회용컵 300원 추가)")
@@ -197,44 +177,6 @@ class Kiosk {
             } else {
                 print("잘못 입력되었습니다.")
             }
-        }
-    }
-    
-    
-    func showShoppingBag() {
-        print ("아래와 같이 주문 하시겠습니까?")
-        print()
-        print("[ Orders ]")
-        if orders.isEmpty {
-            print("장바구니가 비어있습니다.")
-        } else {
-            for order in orders{
-                print(order)
-            }
-        }
-        print()
-        print("""
-        [ Total ]
-        W \(round(totalPrice * 100) / 100)
-        
-        1. 계속 쇼핑하기     2. 결제하기
-        """)
-        guard let finalOption = readLine(),
-              let finalOption = Int(finalOption) else { return }
-        if finalOption == 1 {
-            print()
-            run()
-        } else if finalOption == 2 {
-            payment(totalPrice: totalPrice)
-        }
-    }
-    
-    func payment(totalPrice: Double) {
-        let balance = 10.5
-        if totalPrice <= balance {
-            print("결제되었습니다.")
-        } else {
-            print("현재 잔액은 W \(balance) 로 W \(round((totalPrice - balance) * 100) / 100) 가(이) 부족해서 주문할 수 없습니다.")
         }
     }
     
@@ -332,11 +274,63 @@ class Kiosk {
         goToMenu()
     }
     
-    
-    func showShoppingBagPrice() -> Int {
-        // 쇼핑백에 있는 음식들의 가격 총합을 반환하는 함수
-        return 0
+    func goToMenu() {
+        var repeatGoToMenu = true
+        
+        while repeatGoToMenu {
+            print("1. 메인 메뉴로 이동        2. 장바구니로 이동")
+            guard let goToInput = readLine() else { return }
+            if goToInput == "1" {
+                repeatGoToMenu = false
+                print()
+                run()
+            } else if goToInput == "2" {
+                // 장바구니 [Orders] 로 이동
+                repeatGoToMenu = false
+                showShoppingBag()
+            } else {
+                print("잘못 입력되었습니다.")
+            }
+        }
     }
+    
+    func showShoppingBag() {
+        print ("아래와 같이 주문 하시겠습니까?")
+        print()
+        print("[ Orders ]")
+        if orders.isEmpty {
+            print("장바구니가 비어있습니다.")
+        } else {
+            for order in orders{
+                print(order)
+            }
+        }
+        print()
+        print("""
+        [ Total ]
+        W \(round(totalPrice * 100) / 100)
+        
+        1. 계속 쇼핑하기     2. 결제하기
+        """)
+        guard let finalOption = readLine(),
+              let finalOption = Int(finalOption) else { return }
+        if finalOption == 1 {
+            print()
+            run()
+        } else if finalOption == 2 {
+            payment(totalPrice: totalPrice)
+        }
+    }
+    
+    func payment(totalPrice: Double) {
+        let balance = 10.5
+        if totalPrice <= balance {
+            print("결제되었습니다.")
+        } else {
+            print("현재 잔액은 W \(balance) 로 W \(round((totalPrice - balance) * 100) / 100) 가(이) 부족해서 주문할 수 없습니다.")
+        }
+    }
+    
     
     func run() {
         var run = true
@@ -366,125 +360,3 @@ class Kiosk {
         }
     }
 }
-
-
-
-/*
- func drinks() {
-     print("주문할 메뉴의 번호를 입력해주세요.")
-     print()
-     print("[ Drinks MENU ]")
-     for idx in 0..<drinksMenu.count {
-         drinksMenu[idx].displayInfo(at: idx)
-     }
-     print("0. 뒤로가기 | 뒤로가기")
-     addToShoppingBag()
- }
- 
- func addToShoppingBag() {
-     var repeatMenu = true
-     
-     while repeatMenu {
-         guard let drinknumber = readLine(),
-               let drinknumber = Int(drinknumber) else { return }
-         if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
-             // 장바구니 함수
-             print("\(drinksMenu[drinknumber - 1].name)를 장바구니에 추가하시겠습니까?")
-             print("1. 확인        2. 취소")
-             guard let addBagInput = readLine(),
-                   let addBagInput = Int(addBagInput) else { return }
-             if addBagInput == 1 {
-                 print("\(drinksMenu[drinknumber - 1].name)가 장바구니에 추가되었습니다.")
-                 // totalPrice 에 + drinksMenu[drinknumber - 1].price
-                 totalPrice += drinksMenu[drinknumber - 1].price
-                 // 장바구니 [Orders] 에 추가
-                 orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
-                 takeOut(drinknumber: addBagInput)
-             } else if addBagInput == 2 {
-                 print("취소되었습니다.")
-             }
-             goToMenu()
-             repeatMenu = false
-         } else if drinknumber == 0 {
-             return
-         } else {
-             print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
-         }
-     }
- }
- 
- func goToMenu() {
-     var repeatAddToShoppingBag = true
-     
-     while repeatAddToShoppingBag {
-         print("1. 메인 메뉴로 이동 2. 장바구니로 이동")
-         guard let goToInput = readLine() else { return }
-         if goToInput == "1" {
-             return
-         } else if goToInput == "2" {
-             // 장바구니 [Orders] 로 이동
-             repeatAddToShoppingBag = false
-             showShoppingBag()
-         } else {
-             print("잘못 입력되었습니다.")
-         }
-     }
- }
- 
- func takeOut(drinknumber: Int) {
-     while true{
-         print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
-         guard let cupInput = readLine() else { return }
-         if cupInput == "y" {
-             totalPrice += 0.3
-             print("음료가 일회용컵에 준비됩니다.")
-             orders.append("일회용컵 | W 0.3")
-             drinksMenu[drinknumber - 1].takeOut = true
-             break
-         } else if cupInput == "n" {
-             print("음료가 매장컵에 준비됩니다.")
-             drinksMenu[drinknumber - 1].takeOut = false
-             break
-         } else {
-             print("잘못 입력되었습니다.")
-         }
-     }
- }
- 
- 
- func showShoppingBag() {
-     print ("아래와 같이 주문 하시겠습니까?")
-     print()
-     print("[ Orders ]")
-     if orders.isEmpty {
-         print("장바구니가 비어있습니다.")
-     } else {
-         for order in orders{
-             print(order)
-         }
-     }
-     print()
-     print("""
-     [ Total ]
-     W \(round(totalPrice * 100) / 100)
-     
-     1. 계속 쇼핑하기     2. 결제하기
-     """)
-     guard let finalOption = readLine(),
-           let finalOption = Int(finalOption) else { return }
-     if finalOption == 1 {
-         run()
-     } else if finalOption == 2 {
-         payment(totalPrice: totalPrice)
-     }
- }
- 
- func payment(totalPrice: Double) {
-     let balance = 5.5
-     if totalPrice <= balance {
-         print("결제되었습니다.")
-     } else {
-         print("현재 잔액은 W \(balance) 로 W \(round((totalPrice - balance) * 100) / 100) 이 부족해서 주문할 수 없습니다.")
-     }
- }
- */
