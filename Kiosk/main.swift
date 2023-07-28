@@ -70,6 +70,7 @@ func drinks() {
             let addBagInput = readLine()!
             if addBagInput == "1" {
                 print("\(drinksMenu[drinknumber - 1].name)가 장바구니에 추가되었습니다.")
+                // totalPrice 에 + drinksMenu[drinknumber - 1].price
                 totalPrice += drinksMenu[drinknumber - 1].price
                 // 장바구니 [Orders] 에 추가
                 if orders.first == "비어있음" {
@@ -77,7 +78,6 @@ func drinks() {
                 } else {
                     orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
                 }
-                // totalPrice 에 + drinksMenu[drinknumber - 1].price
                 while true {
                     print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
                     let cupInput = readLine()!
@@ -85,13 +85,13 @@ func drinks() {
                         totalPrice += 0.3
                         drinksMenu[drinknumber - 1].takeOut = !drinksMenu[drinknumber - 1].takeOut
                         print("음료가 일회용컵에 준비됩니다.")
-                        //print(drinksMenu[drinknumber - 1].forHere)
+                        //print(drinksMenu[drinknumber - 1].takeOut)
                         orders.append("일회용컵 +300원")
                         // 주문한 drinks 메뉴의 takeOut = true 인 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
                         break
                     } else if cupInput == "n" {
                         print("음료가 매장컵에 준비됩니다.")
-                        //print(drinksMenu[drinknumber - 1].forHere)
+                        //print(drinksMenu[drinknumber - 1].takeOut)
                         break
                     } else {
                         print("잘못 입력되었습니다.")
