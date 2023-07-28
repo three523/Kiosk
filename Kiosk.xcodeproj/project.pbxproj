@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18BF72F62A735B0400A8003B /* Kiosk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF72F52A735B0400A8003B /* Kiosk.swift */; };
+		18BF72F82A73799900A8003B /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF72F72A73799900A8003B /* Food.swift */; };
+		18BF72FA2A7379CD00A8003B /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BF72F92A7379CD00A8003B /* Drink.swift */; };
 		18CBEF9B2A6E0F4C0009113F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBEF9A2A6E0F4C0009113F /* main.swift */; };
 		18CBEFA42A6E7E2B0009113F /* Bear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CBEFA32A6E7E2B0009113F /* Bear.swift */; };
 		7D2C75422A715B1F0032903C /* frogencustard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2C75412A715B1F0032903C /* frogencustard.swift */; };
@@ -26,6 +29,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		18BF72F52A735B0400A8003B /* Kiosk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kiosk.swift; sourceTree = "<group>"; };
+		18BF72F72A73799900A8003B /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		18BF72F92A7379CD00A8003B /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
 		18CBEF972A6E0F4C0009113F /* Kiosk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Kiosk; sourceTree = BUILT_PRODUCTS_DIR; };
 		18CBEF9A2A6E0F4C0009113F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		18CBEFA32A6E7E2B0009113F /* Bear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bear.swift; sourceTree = "<group>"; };
@@ -64,9 +70,12 @@
 			isa = PBXGroup;
 			children = (
 				18CBEF9A2A6E0F4C0009113F /* main.swift */,
+				18BF72F72A73799900A8003B /* Food.swift */,
 				18CBEFA32A6E7E2B0009113F /* Bear.swift */,
 				C32E22592A6E7D39007D98F1 /* burger.swift */,
 				7D2C75412A715B1F0032903C /* frogencustard.swift */,
+				18BF72F52A735B0400A8003B /* Kiosk.swift */,
+				18BF72F92A7379CD00A8003B /* Drink.swift */,
 			);
 			path = Kiosk;
 			sourceTree = "<group>";
@@ -131,8 +140,11 @@
 			files = (
 				C32E225A2A6E7D39007D98F1 /* burger.swift in Sources */,
 				18CBEF9B2A6E0F4C0009113F /* main.swift in Sources */,
+				18BF72F62A735B0400A8003B /* Kiosk.swift in Sources */,
 				18CBEFA42A6E7E2B0009113F /* Bear.swift in Sources */,
 				7D2C75422A715B1F0032903C /* frogencustard.swift in Sources */,
+				18BF72FA2A7379CD00A8003B /* Drink.swift in Sources */,
+				18BF72F82A73799900A8003B /* Food.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
