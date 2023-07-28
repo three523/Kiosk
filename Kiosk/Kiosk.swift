@@ -39,6 +39,8 @@ class Kiosk {
         FrogenCustard(name: "Cups&Cones", price: 4.9, description: "바닐라 / 초콜렛")
     ]
     
+    var shoppingBag: [Food] = []
+    
     func showBaseMenu() {
         print("""
             아래 메뉴판을 보시고 메뉴를 골라 번호를 입력해주세요.
@@ -105,7 +107,7 @@ class Kiosk {
                 print()
                 run()
             } else {
-                addShoppingBag(beer: beers[index])
+                addShoppingBag(food: beers[index])
             }
             showBeerMenu = false
         }
@@ -113,64 +115,45 @@ class Kiosk {
     
     func drinks() {
         print()
-        print("주문할 메뉴의 번호를 입력해주세요.")
-        print("[ Drinks MENU ]")
-        for idx in 0..<drinksMenu.count {
-            drinksMenu[idx].displayInfo(at: idx)
-        }
-        print("0. 뒤로가기 | 뒤로가기")
-        addToShoppingBag()
-    }
-    
-    func addToShoppingBag() {
-        var repeatMenu = true
+        var showBeerMenu = true
         
-        while repeatMenu {
-            guard let drinknumber = readLine(),
-                  let drinknumber = Int(drinknumber) else { return }
-            if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
-                print("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
-                print("위 메뉴를 장바구니에 추가하시겠습니까?")
-                print("1. 확인        2. 취소")
-                guard let addBagInput = readLine(),
-                      let addBagInput = Int(addBagInput) else { return }
-                if addBagInput == 1 {
-                    print("\(drinksMenu[drinknumber - 1].name)이(가) 장바구니에 추가되었습니다.")
-                    totalPrice += drinksMenu[drinknumber - 1].price
-                    orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
-                    takeOut(drinknumber: addBagInput)
-                } else if addBagInput == 2 {
-                    print("취소되었습니다.")
-                } else {
-                    print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
-                }
-                goToMenu()
-                repeatMenu = false
-            } else if drinknumber == 0 {
+        while showBeerMenu {
+            print()
+            print("주문할 메뉴의 번호를 입력해주세요.")
+            print("[ Drinks MENU ]")
+            for idx in 0..<drinksMenu.count {
+                drinksMenu[idx].displayInfo(at: idx)
+            }
+            print("0. 뒤로가기 | 뒤로가기")
+            guard let input = Int(readLine() ?? ""),
+                  input >= 0 && input <= drinksMenu.count + 1 else {
+                print("잘못입력하였습니다.")
+                return
+            }
+            let index = input - 1
+            if index == -1 {
                 print()
-                repeatMenu = false
                 run()
             } else {
-                print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+                addShoppingBag(food: drinksMenu[index].create())
             }
+            showBeerMenu = false
         }
     }
     
-    func takeOut(drinknumber: Int) {
+    func takeOut(drink: Drinks) {
         while true{
             print("테이크 아웃 하시겠습니까? (테이크 아웃 시 일회용컵 300원 추가)")
             print("1. 예        2. 아니오")
             guard let cupInput = readLine(),
                   let cupInput = Int(cupInput) else { return }
             if cupInput == 1 {
-                totalPrice += 0.3
                 print("음료가 일회용컵에 준비됩니다.")
-                orders.append("일회용컵 | W 0.3 | 자원순환보증금 / 반납 시 보증금을 돌려드립니다.")
-                drinksMenu[drinknumber - 1].takeOut = true
+                drink.takeOut = true
                 break
             } else if cupInput == 2 {
                 print("음료가 매장컵에 준비됩니다.")
-                drinksMenu[drinknumber - 1].takeOut = false
+                drink.takeOut = false
                 break
             } else {
                 print("잘못 입력되었습니다.")
@@ -204,17 +187,17 @@ class Kiosk {
                 //return //func burgerMenu()자체가 종료됨.
                 run()
             }
-            addBurgerInShoppingBag(burger: burgers[input - 1])//guard let에 있는 input에 햄버거 번호가 들어오면 else문을 실행하지 않고 바로 여기로 와서 쇼핑백func가 돌아감.
+            addShoppingBag(food: burgers[input - 1])//guard let에 있는 input에 햄버거 번호가 들어오면 else문을 실행하지 않고 바로 여기로 와서 쇼핑백func가 돌아감.
             
             return
         }
     }
-    
-    func addBurgerInShoppingBag(burger: Burger) {
+        
+    func addShoppingBag(food: Food) {
         var showAddGuideLabel = true
         while true {
             if showAddGuideLabel {
-                print("\(burger.name) | W \(burger.price) | \(burger.description)")
+                print("\(food.name) | W \(food.price) | \(food.description)")
                 print("위 메뉴를 장바구니에 추가하시겠습니까?")
                 print("1. 확인        2. 취소")
             }
@@ -228,9 +211,13 @@ class Kiosk {
             }
             
             if input == 1 {
-                print("\(burger.name)이(가) 장바구니에 추가되었습니다.")
-                orders.append("\(burger.name) | W \(burger.price) | \(burger.description)")
-                totalPrice += burger.price
+                print("\(food.name)이(가) 장바구니에 추가되었습니다.")
+                if let drink = food as? Drinks {
+                    takeOut(drink: drink)
+                    shoppingBag.append(drink)
+                } else {
+                    shoppingBag.append(food)
+                }
                 print()
                 break
             } else {
@@ -240,36 +227,12 @@ class Kiosk {
         }
         goToMenu()
     }
-    
-    func addShoppingBag(beer: Beer) {
-        var showAddGuideLabel = true
-        while true {
-            if showAddGuideLabel {
-                print("\(beer.name) | W \(beer.price) | \(beer.description)")
-                print("위 메뉴를 장바구니에 추가하시겠습니까?")
-                print("1. 확인        2. 취소")
-            }
-            
-            showAddGuideLabel = true
-            
-            guard let input = Int(readLine() ?? ""),
-                  input == 1 || input == 2 else {
-                showAddGuideLabel = false
-                continue
-            }
-            
-            if input == 1 {
-                print("\(beer.name)이(가) 장바구니에 추가되었습니다.")
-                orders.append("\(beer.name) | W \(beer.price) | \(beer.description)")
-                totalPrice += beer.price
-                print()
-                break
-            } else {
-                print("취소되었습니다.")
-                break
-            }
+    func showTotalPrice() -> Double {
+        var resultPrice = 0.0
+        shoppingBag.forEach { food in
+            resultPrice += food.price
         }
-        goToMenu()
+        return resultPrice
     }
     
     func goToMenu() {
@@ -296,13 +259,14 @@ class Kiosk {
         print ("아래와 같이 주문 하시겠습니까?")
         print()
         print("[ Orders ]")
-        if orders.isEmpty {
+        if shoppingBag.isEmpty {
             print("장바구니가 비어있습니다.")
         } else {
-            for order in orders{
-                print(order)
+            for index in 0..<shoppingBag.count {
+                shoppingBag[index].displayInfo(at: index)
             }
         }
+        let totalPrice = showTotalPrice()
         print()
         print("""
         [ Total ]

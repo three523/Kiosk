@@ -16,9 +16,6 @@ enum MainMenu: String {
     case exit = "0"
 }
 
-var orders: [String] = []
-var totalPrice: Double = 0
-
 let kiosk = Kiosk()
 kiosk.run()
 
