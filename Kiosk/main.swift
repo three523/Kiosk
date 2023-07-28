@@ -19,7 +19,9 @@ let mainMenu = """
 0. 종료            | 프로그램 종료
 """
 
+var orders: [String] = ["비어있음"]
 var totalPrice: Double = 0
+
 
 class ItemList {
     var name: String
@@ -83,15 +85,16 @@ func drinks() {
                     let cupInput = readLine()!
                     if cupInput == "y" {
                         totalPrice += 0.3
-                        drinksMenu[drinknumber - 1].takeOut = !drinksMenu[drinknumber - 1].takeOut
                         print("음료가 일회용컵에 준비됩니다.")
-                        //print(drinksMenu[drinknumber - 1].takeOut)
                         orders.append("일회용컵 +300원")
-                        // 주문한 drinks 메뉴의 takeOut = true 인 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
+                        drinksMenu[drinknumber - 1].takeOut = true
+                        // 테이크 아웃 하시겠습니까? y 선택할 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
+                        print(drinksMenu[drinknumber - 1].takeOut)
                         break
                     } else if cupInput == "n" {
                         print("음료가 매장컵에 준비됩니다.")
-                        //print(drinksMenu[drinknumber - 1].takeOut)
+                        drinksMenu[drinknumber - 1].takeOut = false
+                        print(drinksMenu[drinknumber - 1].takeOut)
                         break
                     } else {
                         print("잘못 입력되었습니다.")
@@ -151,8 +154,6 @@ func main() {
         }
     }
 }
-
-var orders: [String] = ["비어있음"]
 
 print("SHAKESHACK BURGER 에 오신걸 환영합니다.")
 main()
