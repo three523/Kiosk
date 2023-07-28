@@ -19,30 +19,7 @@ enum MainMenu: String {
 var orders: [String] = []
 var totalPrice: Double = 0
 
-class SponService {
-    func serviceSpon() {
-        
-        print("스푼 드릴까요? \n1번: o , 2번: x")
-        
-        guard let input1 = readLine(), let selectedOption1 = Int(input1) else {
-            print("잘못된 입력입니다. 숫자를 입력해주세요.")
-            return
-        }
-        
-        switch selectedOption1 {
-        case 1:
-            print("spon 드리기")
-            
-        case 2:
-            print("spon 안드리기")
-            
-        default:
-            print("잘못된 입력입니다.")
-            serviceSpon()
-            
-        }
-    }
-}
+
 
 
 class ItemList {
@@ -93,13 +70,14 @@ class Kiosk {
         Burger(name: "Cheeseburger", price: "W 6.9", description: "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"),
         Burger(name: "Hamburger", price: "W 5.4", description: "비프패티를 기반으로 야채가 들어간 기본버거")
     ]
-    let frozenMenu = """
-[ Frozen Custard MENU ]
-1. Shakes     | W 5.9 | 바닐라 / 초콜릿 / 솔티드 카라멜 / 스트로베리 / 피넛버터 /커피
-2. Float      | W 5.9 | 루트 비어 / 퍼플 카우 / 크림시클
-3. Cups&Cones | W 4.9 | 바닐라 / 초콜렛
-0. 뒤로가기     | 뒤로가기
-"""
+    
+        
+    let frozenMenu: [FrogenCustard] = [
+        FrogenCustard(name: "Shakes", price: "W 5.9", description: "바닐라 / 초콜릿 / 솔티드 카라멜 / 스트로베리 / 피넛버터 /커피"),
+        FrogenCustard(name: "Float" , price: "W 5.9", description: "루트 비어 / 퍼플 카우 / 크림시클"),
+        FrogenCustard(name: "Cups&Cones", price: "W 4.9", description: "바닐라 / 초콜렛"),
+        
+    ]
     
     func showBaseMenu() {
         print("""
@@ -114,9 +92,15 @@ class Kiosk {
     }
     
     
+    
     func displayFrozenMenu() {
         
-        print(frozenMenu)
+        print("[ FROGENCUSTARD MENU ]")
+        
+        for index in 0..<frozenMenu.count {
+            frozenMenu[index].display(num: index+1)
+        }
+        print("0.뒤로가기")
         
         guard let input = readLine(), let selectedOption = Int(input) else {
             print("잘못된 입력입니다. 숫자를 입력해주세요.")
@@ -127,9 +111,9 @@ class Kiosk {
             
         case 1:
             print("Shakes를 선택하셨습니다.")
-            let sponService = SponService()
-            sponService.serviceSpon()
-            
+            let frozen = frozenMenu[1]
+            frozen.serviceSpon()
+        
         case 2:
             print("Float를 선택하셨습니다.")
             
