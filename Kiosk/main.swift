@@ -5,6 +5,7 @@
 //  Created by 김도현 on 2023/07/24.
 //
 
+
 import Foundation
 
 enum MainMenu: String {
@@ -15,11 +16,46 @@ enum MainMenu: String {
     case exit = "0"
 }
 
+var orders: [String] = ["비어있음"]
+var totalPrice: Double = 0
+
+
+class ItemList {
+    var name: String
+    var price: Double
+    var description: String
+    
+    init(name: String, price: Double, description: String) {
+        self.name = name
+        self.price = price
+        self.description = description
+    }
+    
+    func displayInfo(at index: Int) {
+        print("\(index + 1). \(name) | W \(price) | \(description)")
+    }
+}
+
+class Drinks: ItemList {
+    var takeOut: Bool = true
+    
+    init(name: String, price: Double, description: String, takeOut: Bool) {
+        super.init(name: name, price: price, description: description)
+    }
+}
+
 class Kiosk {
     // 버거 프로퍼티, 아이스크림 프로퍼티, 음료 프로퍼티 추가하기
     var beers: [Beer] = [
         Beer(name: "ShackMeister Ale", descripton: "쉐이크쉑 버거를 위해 뉴욕 브루클린 브루어리에서 특별히 양조한 에일 맥주", price: 9800),
         Beer(name: "Magpie Brewing Co.", descripton: "Pale Ale / Draft", price: 6800)
+    ]
+    let drinksMenu: [Drinks] = [
+        Drinks(name: "Lemonade", price: 3.9, description: "매장에서 직접 만드는 상큼한 레몬에이드", takeOut: true),
+        Drinks(name: "Iced Tea", price: 3.4, description: "직접 유기농 홍차를 우려낸 아이스티", takeOut: true),
+        Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", takeOut: true),
+        Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", takeOut: true),
+        Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", takeOut: true),
     ]
     
     var shoppingBag: [Beer] = [] // 지금은 Bear로 되어있지만 Food 클래스를 만들어서 모든 음식들을 담을수 있는 shoppingBag 변수만들기
@@ -58,6 +94,81 @@ class Kiosk {
         }
     }
     
+    func drinks() {
+        print("주문할 메뉴의 번호를 입력해주세요.")
+        print()
+        print("[ Drinks MENU ]")
+        for idx in 0..<drinksMenu.count {
+            drinksMenu[idx].displayInfo(at: idx)
+        }
+        print("0. 뒤로가기 | 뒤로가기")
+        while true {
+            let drinknumber = Int(readLine()!)!
+            if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
+                // 장바구니 함수
+                print("\(drinksMenu[drinknumber - 1].name)를 장바구니에 추가하시겠습니까?")
+                print("1. 확인        2. 취소")
+                let addBagInput = readLine()!
+                if addBagInput == "1" {
+                    print("\(drinksMenu[drinknumber - 1].name)가 장바구니에 추가되었습니다.")
+                    // totalPrice 에 + drinksMenu[drinknumber - 1].price
+                    totalPrice += drinksMenu[drinknumber - 1].price
+                    // 장바구니 [Orders] 에 추가
+                    if orders.first == "비어있음" {
+                        orders[0] = ("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
+                    } else {
+                        orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
+                    }
+                    while true {
+                        print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
+                        let cupInput = readLine()!
+                        if cupInput == "y" {
+                            totalPrice += 0.3
+                            print("음료가 일회용컵에 준비됩니다.")
+                            orders.append("일회용컵 +300원")
+                            drinksMenu[drinknumber - 1].takeOut = true
+                            // 테이크 아웃 하시겠습니까? y 선택할 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
+                            print(drinksMenu[drinknumber - 1].takeOut)
+                            break
+                        } else if cupInput == "n" {
+                            print("음료가 매장컵에 준비됩니다.")
+                            drinksMenu[drinknumber - 1].takeOut = false
+                            print(drinksMenu[drinknumber - 1].takeOut)
+                            break
+                        } else {
+                            print("잘못 입력되었습니다.")
+                        }
+                    }
+                } else if addBagInput == "2" {
+                    print("취소되었습니다.")
+                }
+                print("1. 메인 메뉴로 이동 2. 장바구니로 이동")
+                let goToInput = readLine()!
+                if goToInput == "1" {
+                    return
+                } else if goToInput == "2" {
+                    // 장바구니 [Orders] 로 이동
+                    showShoppingBag()
+                }
+            } else if drinknumber == 0 {
+                return
+            } else {
+                print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
+            }
+        }
+    }
+
+    func showShoppingBag() {
+        print ("아래와 같이 주문 하시겠습니까?")
+        print("[ Orders ]")
+        for order in orders{
+            print(order)
+        }
+        print()
+        print("[ Total ]")
+        print("W \(totalPrice)")
+    }
+    
     func addShoppingBag(beer: Beer) {
         print("\(beer.name)을 장바구니에 담으시겠습니까? (y/n)")
         guard let result = readLine() else {
@@ -72,10 +183,6 @@ class Kiosk {
         } else {
             print("잘못입력하였습니다.")
         }
-    }
-    
-    func showShoppingBag() {
-        // 쇼핑백 리스트 보여주기
     }
     
     func showShoppingBagPrice() -> Int {
@@ -93,7 +200,7 @@ class Kiosk {
             case.fronzenCustard:
                 print("FronzenCustard")
             case.drink:
-                print("Drink")
+                drinks()
             case.beer:
                 beerMenu()
             case.exit:
@@ -108,4 +215,3 @@ class Kiosk {
 
 let kiosk = Kiosk()
 kiosk.run()
-
