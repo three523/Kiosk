@@ -19,17 +19,7 @@ let mainMenu = """
 0. 종료            | 프로그램 종료
 """
 
-let burgersMenu = """
-주문할 메뉴의 번호를 입력해주세요.
-
-[ Burgers MENU ]
-1. ShackBurger   | W 6.9 | 토마토, 양상추, 쉑소스가 토핑된 치즈버거
-2. SmokeShack    | W 8.9 | 베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거
-3. Shroom Burger | W 9.4 | 몬스터 치즈와 체다 치즈로 속을 채운 베지테리안 버거
-4. Cheeseburger  | W 6.9 | 포테이토 번과 비프패티, 치즈가 토핑된 치즈버거
-5. Hamburger     | W 5.4 | 비프패티를 기반으로 야채가 들어간 기본버거
-0. 뒤로가기      | 뒤로가기
-"""
+var totalPrice: Double = 0
 
 class ItemList {
     var name: String
@@ -43,7 +33,7 @@ class ItemList {
     }
     
     func displayInfo(at index: Int) {
-        print("\(index + 1). \(name) | W\(price) | \(description)")
+        print("\(index + 1). \(name) | W \(price) | \(description)")
     }
 }
 
@@ -62,7 +52,6 @@ let drinksMenu: [Drinks] = [
     Drinks(name: "Fifty/Fifty", price: 3.5, description: "레몬에이드와 아이스티의 만남", forHere: true),
     Drinks(name: "Fountain Soda", price: 2.7, description: "코카콜라 / 스프라이트 / 환타 오렌지 / 환타 그레이프", forHere: true),
     Drinks(name: "Root Beer", price: 4.4, description: "청량감 있는 독특한 미국식 무알콜 탄산음료", forHere: true),
-    Drinks(name: "Bottled Water", price: 1.0, description: "지리산 암반대수층으로 만든 프리미엄 생수", forHere: true)
 ]
 
 func drinks() {
@@ -73,37 +62,76 @@ func drinks() {
         drinksMenu[idx].displayInfo(at: idx)
     }
     print("0. 뒤로가기 | 뒤로가기")
-    while true{
+    while true {
         let drinknumber = Int(readLine()!)!
-        if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 || drinknumber == 6 {
-            print("\(drinknumber)번 메뉴를 주문하시겠습니까?")
-            while true {
-                print("매장컵을 이용하시겠습니까? y/n (일회용컵 이용 시 300원 추가)")
-                let cupInput = readLine()!
-                if cupInput == "y" {
-                    print("음료가 매장컵에 준비됩니다.")
-                    print(drinksMenu[drinknumber].forHere)
-                    break
-                } else if cupInput == "n" {
-                    drinksMenu[drinknumber].forHere = !drinksMenu[drinknumber].forHere
-                    print("음료가 일회용컵에 준비됩니다.")
-                    print(drinksMenu[drinknumber].forHere)
-                    // drinksMenu[drinknumber].forHere = true 인 경우 price += 300
-                    break
+        if drinknumber == 1 || drinknumber == 2 || drinknumber == 3 || drinknumber == 4 || drinknumber == 5 {
+            // 장바구니 함수
+            print("\(drinksMenu[drinknumber - 1].name)를 장바구니에 추가하시겠습니까?")
+            print("1. 확인        2. 취소")
+            let addBagInput = readLine()!
+            if addBagInput == "1" {
+                print("\(drinksMenu[drinknumber - 1].name)가 장바구니에 추가되었습니다.")
+                totalPrice += drinksMenu[drinknumber - 1].price
+                // 장바구니 [Orders] 에 추가
+                if orders.first == "비어있음" {
+                    orders[0] = ("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
                 } else {
-                    print("잘못 입력되었습니다.")
+                    orders.append("\(drinksMenu[drinknumber - 1].name) | W \(drinksMenu[drinknumber - 1].price) | \(drinksMenu[drinknumber - 1].description)")
                 }
+                // totalPrice 에 + drinksMenu[drinknumber - 1].price
+                while true {
+                    print("테이크 아웃 하시겠습니까? y/n (테이크 아웃 시 일회용컵 300원 추가)")
+                    let cupInput = readLine()!
+                    if cupInput == "y" {
+                        totalPrice += 0.3
+                        drinksMenu[drinknumber - 1].forHere = !drinksMenu[drinknumber - 1].forHere
+                        print("음료가 일회용컵에 준비됩니다.")
+                        //print(drinksMenu[drinknumber - 1].forHere)
+                        orders.append("일회용컵 +300원")
+                        // 주문한 drinks 메뉴의 forHere = false 인 경우 total price += 300, 장바구니에 "일회용컵 +300" 추가
+                        break
+                    } else if cupInput == "n" {
+                        print("음료가 매장컵에 준비됩니다.")
+                        //print(drinksMenu[drinknumber - 1].forHere)
+                        break
+                    } else {
+                        print("잘못 입력되었습니다.")
+                    }
+                }
+            } else if addBagInput == "2" {
+                print("취소되었습니다.")
+            }
+            print("1. 메인 메뉴로 이동 2. 장바구니로 이동")
+            let goToInput = readLine()!
+            if goToInput == "1" {
+                main()
+            } else if goToInput == "2" {
+                // 장바구니 [Orders] 로 이동
+                shoppingBag()
             }
         } else if drinknumber == 0 {
             main()
+            break
         } else {
             print("잘못된 번호를 입력했어요. 다시 입력해주세요.")
         }
     }
 }
 
+func shoppingBag() {
+    print ("아래와 같이 주문 하시겠습니까?")
+    print("[ Orders ]")
+    for order in orders{
+        print(order)
+    }
+    print()
+    print("[ Total ]")
+    print("W \(totalPrice)")
+}
+
 func main() {
     print(mainMenu)
+    
     while true {
         let number = Int(readLine()!)!
         
@@ -125,4 +153,7 @@ func main() {
     }
 }
 
+var orders: [String] = ["비어있음"]
+
+print("SHAKESHACK BURGER 에 오신걸 환영합니다.")
 main()
